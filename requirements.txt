@@ -3,7 +3,11 @@ Jinja2==2.7.3
 MarkupSafe==0.23
 Werkzeug==0.10.4
 argparse==1.2.1
+demjson==2.2.2
 gunicorn==19.3.0
+ipdb==0.8.1
+ipython==3.2.0
 itsdangerous==0.24
 requests==2.7.0
+simplejson==3.7.3
 wsgiref==0.1.2
