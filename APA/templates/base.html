@@ -25,7 +25,15 @@
           <div class="col-lg-12">
             <div class="page-header">
               <h1>APA
-                <small>Spot instance and EC2 analysis</small>
+                <small>
+                % block header
+                 % if name
+                  {{ name }}
+                 % else
+                 Spot instance and EC2 analysis
+                 % endif
+                % endblock
+                </small>
               </h1>
             </div>
             <div class="bs-component">
