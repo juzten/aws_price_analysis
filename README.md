@@ -11,4 +11,4 @@ Use Flask to return pricing analysis information between Spot Instances and EC2 
  * Return the cheapest region overall
 
 # URL
-coming soon!
+https://awspriceanalysis.herokuapp.com/
