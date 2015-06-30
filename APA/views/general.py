@@ -31,8 +31,8 @@ def index():
     url1 = 'http://a0.awsstatic.com/pricing/1/ec2/linux-od.min.js'
     url2 = 'http://spot-price.s3.amazonaws.com/spot.js'
 
-    on_demand_data = get_json_data(url1)
-    spot_data = get_json_data(url2)
+    # on_demand_data = get_json_data(url1)
+    # spot_data = get_json_data(url2)
     return render_template('index.html')
 
 @mod.route('/ondemand', methods=['POST', 'GET'])
@@ -50,6 +50,16 @@ def spot():
     spot_data = get_json_data(url)
 
     return render_template('index.html', pricing_data=spot_data, name='EC2 Spot Data')
+
+
+def top_ten():
+    """Return the top 10 price per vCPU instances across all regions."""
+    pass
+
+
+def cheapest():
+    """Return the cheapest region overall."""
+    pass
 
 def get_json_data(url):
     r1 = requests.get(url)
