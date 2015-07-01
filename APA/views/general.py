@@ -38,8 +38,19 @@ def index():
     # spot instances data doesn't have vCPU info in the supplied file
     top_ten_on_demand = top_ten(on_demand_data)
 
+    cheapest_on_demand_region = cheapest_region(on_demand_data)
+    cheapest_spot_region = cheapest_region(spot_data)
 
-    return render_template('index.html', top_ten_on_demand=top_ten_on_demand, name='Price per vCPU instances across all regions')
+    if cheapest_spot_region['total_price'] > cheapest_on_demand_region['total_price']:
+        cheapest_region_overall = cheapest_on_demand_region
+    else:
+        cheapest_region_overall = cheapest_spot_region
+
+    return render_template('index.html',
+        top_ten_on_demand=top_ten_on_demand,
+        name='Price per vCPU instances across all regions',
+        cheapest_region_overall=cheapest_region_overall)
+
 
 @mod.route('/ondemand', methods=['POST', 'GET'])
 def on_demand():
@@ -48,6 +59,7 @@ def on_demand():
     on_demand_data = get_json_data(url)
 
     return render_template('pricespread.html', pricing_data=on_demand_data, name='EC2 On Demand Data')
+
 
 @mod.route('/spot', methods=['POST', 'GET'])
 def spot():
@@ -88,12 +100,30 @@ def top_ten(instance_data):
     return top_ten_instances
 
 
-def cheapest_region():
+def cheapest_region(data):
     """Return the cheapest region overall.
 
     Disregarding vCPU.
     """
-    pass
+    cheapest_region = {}
+    for instance in data:
+            total_price = 0
+            total_regions = 0
+            for type in instance['types']:
+                for region in type['region_data']:
+                    try:
+                        price = float(region['price'])
+                        total_price = total_price + price
+                        total_regions = total_regions + 1
+                    except ValueError, e:
+                        pass
+
+            if cheapest_region:
+                if total_price < cheapest_region['total_price']:
+                    cheapest_region = {'region': instance['name'], 'total_price': total_price, 'total_regions': total_regions}
+            else:
+                cheapest_region = {'region': instance['name'], 'total_price': total_price, 'total_regions': total_regions}
+    return cheapest_region
 
 def get_json_data(url):
     r1 = requests.get(url)
@@ -116,11 +146,6 @@ def get_json_data(url):
                         region_vCPU = r_size['vCPU']
                     except KeyError, e:
                         region_vCPU = None
-                    # if r_size['vCPU']:
-                    #
-                    # else:
-                    # import ipdb; ipdb.set_trace()
-                    # region_vCPU = r_size['vCPU']
 
                     region_sizes.append({'size': region_size, 'price': region_price, 'vCPU': region_vCPU})
                 region_types.append({'type': region_type, 'region_data': region_sizes})

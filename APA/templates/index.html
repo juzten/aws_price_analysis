@@ -28,4 +28,24 @@
       </tbody>
     </table>
   % endif
+
+  % if cheapest_region_overall
+    <h2>Cheapest region overall</h2>
+    <table class="table table-striped table-hover ">
+      <thead>
+        <tr>
+          <th>Region</th>
+          <th>Total Price</th>
+          <th>Total Instances in Region</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ cheapest_region_overall.region }}<br></td>
+          <td>{{ cheapest_region_overall.total_price }}<br></td>
+          <td>{{ cheapest_region_overall.total_regions }}<br></td>
+        </tr>
+      </tbody>
+    </table>
+  % endif
 % endblock
