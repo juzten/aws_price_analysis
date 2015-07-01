@@ -7,30 +7,25 @@
 % endblock
 
 % block content
-  % if pricing_data
-    % for data in pricing_data
-      <h2>Region: {{ data.name }}</h2>
-      % for type in data.types
-        <b>Instance Type:</b> {{ type.type }}<br>
-        <table class="table table-striped table-hover ">
-          <thead>
-            <tr>
-              <th>Size</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-          % for specs in type.region_data
-            <tr>
-              <td>{{ specs.size }}<br></td>
-              <td>{{ specs.price }}<br></td>
-            </tr>
-            % endfor
-          </tbody>
-        </table>
-        <br><br>
-      % endfor
-      <hr>
-    % endfor
+  % if top_ten_on_demand
+    <h2>Top ten for On Demand</h2>
+    <table class="table table-striped table-hover ">
+      <thead>
+        <tr>
+          <th>Region</th>
+          <th>Instance Size</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+      % for top in top_ten_on_demand
+        <tr>
+          <td>{{ top.name }}<br></td>
+          <td>{{ top.size }}<br></td>
+          <td>{{ top.price }}<br></td>
+        </tr>
+        % endfor
+      </tbody>
+    </table>
   % endif
 % endblock
