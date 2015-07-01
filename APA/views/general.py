@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import urllib
-import json
-from pprint import pprint as pp
 import requests
 import demjson
-from flask import Blueprint, render_template_string, render_template, flash
-from flask import Flask, request, Response, g, session, redirect, url_for
-from config import config
+from flask import Blueprint, render_template
+from flask import Flask, session
 
-
+# register blueprint
 mod = Blueprint('general', __name__)
 
 
